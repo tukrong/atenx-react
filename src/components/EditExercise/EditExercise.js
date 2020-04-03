@@ -19,8 +19,7 @@ export default class EditExercise extends Component {
       age: 0,
       description: '',
       duration: 0,
-      date: new Date(),
-      clients: []
+      date: new Date()
     }
   }
 
@@ -88,6 +87,7 @@ export default class EditExercise extends Component {
 
     const exercise = {
       fullname: this.state.fullname,
+      age: this.state.age,
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date
@@ -98,51 +98,55 @@ export default class EditExercise extends Component {
     axios.post('http://localhost:4741/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data))
 
-    window.location = '/'
+    window.location = '/exercises'
   }
 
   render () {
     return (
       <div>
-        <h3>Edit Exercise Log</h3>
+        <h3>New Exercise Log</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Username: </label>
-            <select ref={this.userInput}
+            <lable> Name: </lable>
+            <input
               required
               className="form-control"
               value={this.state.fullname}
               onChange={this.onChangeName}>
-              {
-                this.state.clients.map(function (client) {
-                  return <option
-                    key={client}
-                    value={client}>{client}
-                  </option>
-                })
-              }
-            </select>
+            </input>
+          </div>
+
+          <div className="form-group">
+            <lable>Age: </lable>
+            <input type="text"
+              required
+              className="form-control"
+              value={this.state.age}
+              onChange={this.onChangeAge}
+            />
+
           </div>
           <div className="form-group">
-            <label>Description: </label>
+            <lable>Description: </lable>
             <input type="text"
               required
               className="form-control"
               value={this.state.description}
               onChange={this.onChangeDescription}
             />
+
           </div>
           <div className="form-group">
-            <label>Duration (in minutes): </label>
-            <input
-              type="text"
+            <lable>Duration (in minutes) </lable>
+            <input type="text"
+              required
               className="form-control"
               value={this.state.duration}
               onChange={this.onChangeDuration}
             />
           </div>
           <div className="form-group">
-            <label>Date: </label>
+            <lable>Date: </lable>
             <div>
               <DatePicker
                 selected={this.state.date}
@@ -152,7 +156,7 @@ export default class EditExercise extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+            <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
           </div>
         </form>
       </div>
